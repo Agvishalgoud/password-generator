@@ -1,4 +1,4 @@
-🔹 Demo: 🔗 
+🔹 Demo: 🔗 passwordgeneratorbyvishal.netlify.app
 
 # 🔐 Password Generator
 
