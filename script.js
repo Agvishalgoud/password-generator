@@ -5,47 +5,63 @@ const toggleTheme = document.getElementById("toggleTheme");
 const copyMessage = document.getElementById("copyMessage");
 const lengthSlider = document.getElementById("length");
 const lengthValue = document.getElementById("lengthValue");
-const warningMessage = document.createElement("p");  // Create warning message element
+const warningMessage = document.createElement("p");
 warningMessage.id = "warningMessage";
 warningMessage.style.color = "red";
-warningMessage.style.display = "none";  // Initially hidden
-generateBtn.insertAdjacentElement("beforebegin", warningMessage); // Insert above Generate Button
+warningMessage.style.display = "none";
+generateBtn.insertAdjacentElement("beforebegin", warningMessage);
 
-// Update length value display
 lengthSlider.addEventListener("input", () => {
     lengthValue.textContent = lengthSlider.value;
 });
 
-// Generate Password Function
 function generatePassword() {
     let length = lengthSlider.value;
     let charset = "";
-
+    
     if (document.getElementById("lowercase").checked) charset += "abcdefghijklmnopqrstuvwxyz";
     if (document.getElementById("uppercase").checked) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     if (document.getElementById("numbers").checked) charset += "0123456789";
     if (document.getElementById("symbols").checked) charset += "!@$%^&*()_+-={}[]<>?";
-
-    // Show warning if no option is selected
+    
     if (charset === "") {
-        warningMessage.textContent = "⚠️ Invalid Input! Please select at least one option.";
+        warningMessage.textContent = "⚠️ Please select at least one option!";
         warningMessage.style.display = "block";
         passwordInput.value = "";
         return;
     }
-
-    // Hide warning if valid input
+    
     warningMessage.style.display = "none";
-
+    
     let password = "";
     for (let i = 0; i < length; i++) {
         password += charset[Math.floor(Math.random() * charset.length)];
     }
     
     passwordInput.value = password;
+    
+    // Animation effects
+    passwordInput.style.transform = "scale(0.95)";
+    setTimeout(() => {
+        passwordInput.style.transform = "scale(1)";
+    }, 100);
+    
+    // Confetti effect
+    const container = document.querySelector('.container');
+    for(let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = '8px';
+        confetti.style.height = '8px';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        confetti.style.borderRadius = '50%';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animation = `confetti 1s ease-out`;
+        container.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1000);
+    }
 }
 
-// Copy Password Function
 copyBtn.addEventListener("click", () => {
     if (passwordInput.value) {
         navigator.clipboard.writeText(passwordInput.value);
@@ -56,11 +72,11 @@ copyBtn.addEventListener("click", () => {
     }
 });
 
-// Generate Password on Button Click
 generateBtn.addEventListener("click", generatePassword);
 
-// Toggle Theme Function
 toggleTheme.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    toggleTheme.innerHTML = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+    toggleTheme.innerHTML = document.body.classList.contains("dark-mode") 
+        ? "☀️ Light Mode" 
+        : "🌙 Dark Mode";
 });
