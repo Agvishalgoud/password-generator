@@ -1,4 +1,5 @@
-.
+🔹 Demo: 🔗 
+
 # 🔐 Password Generator
 
 A modern and **responsive Password Generator** built with **HTML, CSS, and JavaScript**. It allows users to generate strong passwords with custom settings and provides a smooth UI with animations and dark/light mode.
